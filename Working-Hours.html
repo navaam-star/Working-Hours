@@ -364,8 +364,6 @@ display: none;
 ## Installing package into &#39;/cloud/lib/x86_64-pc-linux-gnu-library/4.3&#39;
 ## (as &#39;lib&#39; is unspecified)
 ## Installing package into &#39;/cloud/lib/x86_64-pc-linux-gnu-library/4.3&#39;
-## (as &#39;lib&#39; is unspecified)
-## Installing package into &#39;/cloud/lib/x86_64-pc-linux-gnu-library/4.3&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
 </div>
 <div id="loading-libraries" class="section level2">
@@ -379,24 +377,7 @@ display: none;
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
-## 
-## Attaching package: &#39;plotly&#39;
-## 
-## 
-## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     last_plot
-## 
-## 
-## The following object is masked from &#39;package:stats&#39;:
-## 
-##     filter
-## 
-## 
-## The following object is masked from &#39;package:graphics&#39;:
-## 
-##     layout</code></pre>
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
 <div id="research-question" class="section level2">
 <h2>Research Question</h2>
@@ -635,6 +616,120 @@ worked</em></li>
 <li><em>The average annual hours worked decrease with a rise in GDP Per
 Capita</em></li>
 </ul>
+</div>
+<div id="conclusions" class="section level2">
+<h2>Conclusions</h2>
+<p>-It may be concluded that economic prosperity varies significantly
+amongst countries</p>
+<p>-The average annual income of a person in Switzerland is
+approximately USD 75000, which is almost twenty times more than that of
+a person in Cambodia, which is approximately USD 4500</p>
+<p>-However, the data analysis and scatter plot suggest that a worker in
+Switzerland worked for 1556 hours in 2019 as compared to the worker in
+Cambodia who worked for 2475 hours in the same year.</p>
+<p>-The worker in Switzerland worked 919 hours less annually.</p>
+<p>-Therefore, it may be concluded that workers in richer countries do
+not work longer hours.</p>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<pre class="r"><code># add data to the data folder
+write.csv(wh, file = &#39;Data/pwt1001.csv&#39;)
+# *****</code></pre>
+<p><strong>Table to show Productivity</strong></p>
+<pre class="r"><code># create table to show productivity
+rp_p &lt;- dp %&gt;% mutate(productivity = gdp/(hours_per_year*people_employed))
+
+knitr::kable(rp_p, caption = &quot;An analysis of productivity of some of the most prosperous and least prosperous countries (2019)&quot;)</code></pre>
+<table>
+<caption>An analysis of productivity of some of the most prosperous and
+least prosperous countries (2019)</caption>
+<colgroup>
+<col width="12%" />
+<col width="5%" />
+<col width="11%" />
+<col width="11%" />
+<col width="17%" />
+<col width="15%" />
+<col width="11%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">country</th>
+<th align="right">year</th>
+<th align="right">gdp</th>
+<th align="right">population</th>
+<th align="right">people_employed</th>
+<th align="right">hours_per_year</th>
+<th align="right">gdp_capita</th>
+<th align="right">productivity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Bangladesh</td>
+<td align="right">2019</td>
+<td align="right">759470.62</td>
+<td align="right">163.046161</td>
+<td align="right">65.5340652</td>
+<td align="right">2418.883</td>
+<td align="right">4658.010</td>
+<td align="right">4.791032</td>
+</tr>
+<tr class="even">
+<td align="left">Switzerland</td>
+<td align="right">2019</td>
+<td align="right">646919.62</td>
+<td align="right">8.591365</td>
+<td align="right">5.0112047</td>
+<td align="right">1556.883</td>
+<td align="right">75298.817</td>
+<td align="right">82.918655</td>
+</tr>
+<tr class="odd">
+<td align="left">Cambodia</td>
+<td align="right">2019</td>
+<td align="right">74190.30</td>
+<td align="right">16.486542</td>
+<td align="right">8.7314634</td>
+<td align="right">2474.912</td>
+<td align="right">4500.053</td>
+<td align="right">3.433210</td>
+</tr>
+<tr class="even">
+<td align="left">Luxembourg</td>
+<td align="right">2019</td>
+<td align="right">55710.79</td>
+<td align="right">0.615729</td>
+<td align="right">0.4606628</td>
+<td align="right">1505.559</td>
+<td align="right">90479.404</td>
+<td align="right">80.326438</td>
+</tr>
+<tr class="odd">
+<td align="left">Norway</td>
+<td align="right">2019</td>
+<td align="right">396253.88</td>
+<td align="right">5.378857</td>
+<td align="right">2.8536618</td>
+<td align="right">1384.073</td>
+<td align="right">73668.788</td>
+<td align="right">100.325639</td>
+</tr>
+<tr class="even">
+<td align="left">Pakistan</td>
+<td align="right">2019</td>
+<td align="right">1088502.50</td>
+<td align="right">216.565318</td>
+<td align="right">63.0850525</td>
+<td align="right">1966.907</td>
+<td align="right">5026.209</td>
+<td align="right">8.772414</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># *****</code></pre>
 </div>
 
 

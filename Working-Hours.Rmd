@@ -15,7 +15,6 @@ knitr::opts_chunk$set(echo = TRUE)
 install.packages("tidyverse")
 install.packages("knitr")
 install.packages("dplyr")
-install.packages("plotly")
 # *****
 ```
 
@@ -26,7 +25,6 @@ library(tidyverse, quietly = T)
 library(knitr, quietly = T)
 library(readr, quietly = T)
 library(dplyr, quietly = T)
-library(plotly, quietly = T)
 # *****
 ```
 
@@ -153,6 +151,16 @@ sp
 
 ```{r}
 # add data to the data folder
-write.csv(pwt1001, file = 'Data/pwt1001.csv')
+write.csv(wh, file = 'Data/pwt1001.csv')
+# *****
+```
+
+**Table to show Productivity**
+
+```{r}
+# create table to show productivity
+rp_p <- dp %>% mutate(productivity = gdp/(hours_per_year*people_employed))
+
+knitr::kable(rp_p, caption = "An analysis of productivity of some of the most prosperous and least prosperous countries (2019)")
 # *****
 ```
