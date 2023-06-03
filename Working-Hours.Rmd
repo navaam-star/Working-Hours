@@ -1,0 +1,158 @@
+---
+title: "Working-Hours"
+author: "Naveed Aamir"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Install Packages
+```{r installPackages, echo=FALSE}
+# install the required packages
+install.packages("tidyverse")
+install.packages("knitr")
+install.packages("dplyr")
+install.packages("plotly")
+# *****
+```
+
+## Loading Libraries
+```{r loadLibraries, echo=FALSE}
+# load the required libraries
+library(tidyverse, quietly = T)
+library(knitr, quietly = T)
+library(readr, quietly = T)
+library(dplyr, quietly = T)
+library(plotly, quietly = T)
+# *****
+```
+
+## Research Question
+
+Do workers in richer countries work longer hours?
+
+## Data Introduction
+
+***Description***
+
+The data set has details on the average annual working hours of a worker, real gross domestic product, people employed and population of various countries. [Working Hours](https://www.rug.nl/ggdc/productivity/pwt/)
+
+***Variables***
+
+The variables that may be used to investigate the research question are:
+
+-country, which shows the name for each country
+
+-year, which indicates the year
+
+-rgdpo, which is the output-side real GDP to compare relative productive capacity across countries and over time
+
+-avh, which is the average sum of hours worked by employees and self-employed people during each year in a country.
+
+-pop, which is the population of each country
+
+-emp, which is the number of people employed
+
+-to help answer the question, two new variables have been mutated, namely gdp_capita, which gives an idea of the prosperity of a particular country and productivity, which is the output in USD per hour worked.
+
+```{r readData and review, echo=FALSE}
+# Read data and review
+wh <- read.csv("pwt1001.csv")
+# *****
+```
+
+**Table to show variable names**
+```{r}
+# wrangling data
+wh_mod <- filter(wh, year == 2019) %>% select(country, year, rgdpo, pop, emp, avh) %>% rename(gdp = rgdpo, population = pop, people_employed = emp, hours_per_year = avh) %>% mutate(gdp_capita = gdp/population)
+
+wh_mod2 <- arrange(wh_mod, desc(gdp_capita))
+
+rp_wh <- filter(wh, country %in% c("Cambodia", "Bangladesh", "Pakistan", "Luxembourg", "Switzerland", "Norway")) %>% select(country, year, rgdpo, pop, emp, avh) %>% rename(gdp = rgdpo, population = pop, people_employed = emp, hours_per_year = avh) %>% mutate(gdp_capita = gdp/population)
+
+
+table_wh <- head(rp_wh, 5)
+
+knitr::kable(table_wh)
+# *****
+```
+
+## Data Description
+
+```{r}
+# counting number of variables and observations
+v <- ncol(rp_wh)
+o <- nrow(rp_wh)
+# *****
+```
+
+There are a total of `r v` variables and `r o` observations in the data set.
+```{r out.width='100%'}
+knitr::include_graphics('Image/a1.png')
+```
+
+```{r}
+# types of variables
+str(rp_wh)
+# *****
+```
+
+## Data Summary
+
+```{r}
+# data summary
+summary <- rp_wh %>% group_by(country) %>% summarise(mean_gdp_capita = mean(gdp_capita, na.rm=TRUE), gdp_capita_sum = sum(gdp_capita, na.rm=TRUE), mean_hours_worked = mean(hours_per_year, na.rm=TRUE), hours_worked_sum = sum(hours_per_year, na.rm = TRUE))
+
+knitr::kable(summary, caption = "An analysis of GDP Per Capita and average annual hours worked for some of the most prosperous and least prosperous countries (1950-2019)")
+# *****
+```
+
+-The mean GDP Per Capita suggests that Switzerland and Luxembourg are some of the most prosperous nations
+
+-Cambodia and Bangladesh are some of the least prosperous nations
+
+-However, the mean hours worked suggests that a worker in Switzerland and Luxembourg actually works the least average number of hours annually as compared to the other countries. 
+
+Therefore, it may be concluded that workers in **richer** countries do not work longer hours as compared to workers in less prosperous nations.
+
+-The sum for both GDP per Capita and hours worked does not provide an accurate insight into either the comparison of the average earning of a worker over the time period mentioned or the comparison of the average total hours worked over the same time period because of the missing values in the data set.
+
+## Visualisations
+
+```{r}
+#filter the data for the scatter plot
+dp <- filter(rp_wh, year == 2019)
+
+#scatter plot of average annual hours worked vs GDP Per Capita
+sp <- ggplot(data = dp, aes(x = gdp_capita, y = hours_per_year, colour = country)) +
+  geom_point() + labs(title = "Variation of average annual hours worked with GDP Per Capita",x = "GDP Per Capita (USD)",y = "Average annual hours worked",subtitle = "The average annual hours worked decrease as GDP Per Captia increases.", caption = "Based on 2019 data") + theme_bw() + theme(legend.title = element_blank())
+
+sp
+# *****
+```
+
+- *Switzerland and Luxembourg have the highest GDP Per Capita but the lowest average annual hours worked, whereas, Cambodia and Bangladesh have the lowest GDP Per Capita but the highest average annual hours worked*
+- *The average annual hours worked decrease with a rise in GDP Per Capita*
+
+## Conclusions
+
+-It may be concluded that economic prosperity varies significantly amongst countries
+
+-The average annual income of a person in Switzerland is approximately USD 75000, which is almost twenty times more than that of a person in Cambodia, which is approximately USD 4500
+
+-However, the data analysis and scatter plot suggest that a worker in Switzerland worked for 1556 hours in 2019 as compared to the worker in Cambodia who worked for 2475 hours in the same year.
+
+-The worker in Switzerland worked 919 hours less annually.
+
+-Therefore, it may be concluded that workers in richer countries do not work longer hours.
+
+## Data
+
+```{r}
+# add data to the data folder
+write.csv(pwt1001, file = 'Data/pwt1001.csv')
+# *****
+```
