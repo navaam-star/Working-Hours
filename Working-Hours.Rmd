@@ -1,15 +1,14 @@
 ---
-title: "Working-Hours"
+title: "Working Hours"
 author: "Naveed Aamir"
 date: "`r Sys.Date()`"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-## Install Packages
 ```{r installPackages, echo=FALSE}
 # install the required packages
 install.packages("tidyverse")
@@ -18,7 +17,6 @@ install.packages("dplyr")
 # *****
 ```
 
-## Loading Libraries
 ```{r loadLibraries, echo=FALSE}
 # load the required libraries
 library(tidyverse, quietly = T)
@@ -36,7 +34,19 @@ Do workers in richer countries work longer hours?
 
 ***Description***
 
-The data set has details on the average annual working hours of a worker, real gross domestic product, people employed and population of various countries. [Working Hours](https://www.rug.nl/ggdc/productivity/pwt/)
+-The data set has details on the average annual working hours of a worker, real gross domestic product, people employed and population of various countries from the year 1950 to 2019. [Working Hours](https://www.rug.nl/ggdc/productivity/pwt/)
+
+-Since the raw data set was too large, the filter() function was used to get the data for 2019.
+
+-The select() function was used to obtain the variables relevant to the required analysis.
+
+-The rename() was used to rename some of the variables from the raw data set to make it easier for the audience to understand.
+
+-The mutate() function was used to create a new variable gdp_capita
+
+-The arrange() function was then used to arrange the filtered data in descending order to figure out some of the countries with the highest GDP Per Capita (most prosperous) and with one of the lowest GDP Per Capita (least prosperous). 
+
+-Then the filter() function was used on the raw data set again to obtain the information on the shortlisted countries so that it may be explored further to answer the research question.
 
 ***Variables***
 
@@ -54,11 +64,11 @@ The variables that may be used to investigate the research question are:
 
 -emp, which is the number of people employed
 
--to help answer the question, two new variables have been mutated, namely gdp_capita, which gives an idea of the prosperity of a particular country and productivity, which is the output in USD per hour worked.
+-to help answer the question, two new variables have been mutated, namely gdp_capita, which gives an idea of the prosperity of a particular country and created further on in the report is productivity, which is the output in USD per hour worked.
 
 ```{r readData and review, echo=FALSE}
 # Read data and review
-wh <- read.csv("pwt1001.csv")
+wh <- read.csv("Data/pwt1001.csv")
 # *****
 ```
 
@@ -80,6 +90,8 @@ knitr::kable(table_wh)
 
 ## Data Description
 
+**Number of variables and observations**
+
 ```{r}
 # counting number of variables and observations
 v <- ncol(rp_wh)
@@ -88,13 +100,18 @@ o <- nrow(rp_wh)
 ```
 
 There are a total of `r v` variables and `r o` observations in the data set.
+
+**Display the figure**
+
 ```{r out.width='100%'}
 knitr::include_graphics('Image/a1.png')
 ```
 
+**Types of variables**
+
 ```{r}
-# types of variables
-str(rp_wh)
+# show first two rows of the data and the types of variables
+str(head(rp_wh,2))
 # *****
 ```
 
@@ -133,7 +150,7 @@ knitr::kable(rp_p, caption = "An analysis of productivity of some of the most pr
 
 -It may be reconfirmed from the table that both Switzerland and Luxembourg with productivity of almost USD 83 per hour and USD 80 per hour respectively, are some of the most prosperous nations in the world
 
--However, with productivity of almost USD 3 per hour and USD 5 per hour respectively, it may be reiterated that Cambodia and Bangladesh are some of the least prosperous nations
+-However, with productivity of only USD 3 per hour and USD 5 per hour respectively, it may be reiterated that Cambodia and Bangladesh are some of the least prosperous nations
 
 -It can also be seen that a worker in the more productive nations Switzerland and Luxembourg, works for approximately 1556 and 1505 hours annually respectively, which is significantly lower than the average annual hours worked by a worker in Cambodia and Bangladesh
 
@@ -167,11 +184,9 @@ sp2
 ```
 
 - *Switzerland and Luxembourg are among countries with the highest productivity and the lowest average annual hours worked, whereas, Cambodia and Bangladesh are among countries with the lowest productivity and the highest average annual hours worked*
-- *The average annual hours worked decrease with a rise productivity*
+- *The average annual hours worked decrease with a rise in productivity*
 
 ## Conclusions
-
--It may be concluded that economic prosperity varies significantly amongst countries
 
 -The average annual income of a person in Switzerland is approximately USD 75000, which is almost twenty times more than that of a person in Cambodia, which is approximately USD 4500
 
@@ -179,7 +194,13 @@ sp2
 
 -The worker in Switzerland worked 919 hours less annually.
 
--Therefore, it may be concluded that workers in richer countries do not work longer hours.
+-The analysis of productivity indicates that Switzerland has more than twenty five times the productivity of Cambodia, however, a worker in Switzerland works approximately 37% less than a worker in Cambodia
+
+-It is found that the average annual hours worked are significantly less in countries with higher GDP Per Capita
+
+-Furthermore, the average annual hours worked are far less in more productive economies
+
+-Therefore, all of the above mentioned insights acquired may be used to make the informed conclusion that economic prosperity varies significantly among countries and workers in richer countries do not work longer hours.
 
 ## Data
 
