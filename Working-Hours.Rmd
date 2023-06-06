@@ -188,7 +188,7 @@ sp2
 
 ## Conclusions
 
--The average annual income of a person in Luxembourg is approximately USD 75000, which is almost twenty times more than that of a person in Cambodia, which is approximately USD 4500
+-The average annual income of a person in Switzerland is approximately USD 75000, which is almost twenty times more than that of a person in Cambodia, which is approximately USD 4500
 
 -However, the data analysis and scatter plot suggest that a worker in Switzerland worked for 1556 hours in 2019 as compared to the worker in Cambodia who worked for 2475 hours in the same year.
 
