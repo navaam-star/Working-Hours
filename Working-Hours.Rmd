@@ -9,13 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-```{r installPackages, echo=FALSE}
-# install the required packages
-install.packages("tidyverse")
-install.packages("knitr")
-install.packages("dplyr")
-# *****
-```
+
 
 ```{r loadLibraries, echo=FALSE}
 # load the required libraries
